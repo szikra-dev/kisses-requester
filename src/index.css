@@ -4,6 +4,8 @@
   --muted: #9b7486;
   --accent: #ff3d7f;
   --accent-2: #ff8fb1;
+  --later: #9b5de5;
+  --later-2: #c9a3ff;
   --card: #ffffff;
   --shadow: 0 10px 30px rgba(255, 61, 127, 0.18);
   color-scheme: light dark;
@@ -345,4 +347,79 @@ h2 {
 
 .btn:disabled {
   opacity: 0.5;
+}
+
+.modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.modes button {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 8px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.modes button.active {
+  background: var(--accent);
+  color: white;
+}
+
+.modes button.active:last-child {
+  background: var(--later);
+}
+
+.kiss-button.later {
+  background: radial-gradient(circle at 30% 30%, var(--later-2), var(--later));
+}
+
+.later-card {
+  border: 2px solid color-mix(in srgb, var(--later) 35%, transparent);
+}
+
+.later-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.later-block p {
+  margin: 0;
+}
+
+.later-block + .later-block {
+  border-top: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  padding-top: 12px;
+}
+
+.later-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.kiss-tap {
+  font-size: 26px;
+  line-height: 1;
+  padding: 2px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: pop 0.3s ease-out backwards;
+}
+
+.kiss-tap:active {
+  transform: scale(0.7);
 }

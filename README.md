@@ -7,12 +7,18 @@ App web (móvil) para pedir besos entre dos personas. Vite + React, desplegada e
 - Al entrar eliges quién eres (David u Olga; se guarda en el navegador).
 - Pulsa el botón tantas veces como besos quieras. Tras ~1 s sin pulsar se envía la petición.
 - La otra persona ve "X te pide N besos" y le da a **Mandar besos** → a ti te llueven besos.
+- Modo **🫶 Al vernos**: los besos se guardan para cuando estéis juntos. Quien los pidió los
+  desmarca (uno a uno o todos) cuando se los dan en persona.
 
 ## "Base de datos"
 
 No hay servidor: se usa un topic secreto de [ntfy.sh](https://ntfy.sh) (pub/sub gratis, sin cuenta).
 Cada acción es un mensaje; el estado se calcula a partir de los mensajes. ntfy.sh guarda los
-mensajes **12 horas**: una petición sin responder durante más de 12 h se pierde.
+mensajes **12 horas**: una petición "Ahora" sin responder durante más de 12 h se pierde.
+
+Los besos "Al vernos" no caducan: cada contador lo modifica solo quien pidió los besos, cada
+móvil guarda el último valor en `localStorage` y la app lo republica en ntfy si el último
+mensaje tiene más de 6 h (gana el de `updatedAt` más reciente).
 
 El topic secreto **no está en el repo**: va en el enlace, `https://<url>/#k=<topic-secreto>`.
 Ábrelo una vez en cada móvil y queda guardado.
