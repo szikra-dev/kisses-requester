@@ -17,6 +17,12 @@ mensajes **12 horas**: una petición sin responder durante más de 12 h se pierd
 El topic secreto **no está en el repo**: va en el enlace, `https://<url>/#k=<topic-secreto>`.
 Ábrelo una vez en cada móvil y queda guardado.
 
+## PWA
+
+Es instalable ("Añadir a pantalla de inicio" en iPhone, "Instalar app" en Android) y arranca
+sin conexión (`vite-plugin-pwa`). El manifest no lleva el topic secreto; si la app instalada no
+lo tiene guardado (en iPhone no comparte datos con Safari), te pide pegar el enlace una vez.
+
 ## Notificaciones push
 
 Cuando te piden besos, además se publica un aviso en tu canal personal `<topic>-<tu-id>`

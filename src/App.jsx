@@ -27,19 +27,28 @@ function readTopic() {
   return fromHash || store.get('topic')
 }
 
+// Acepta el enlace entero (…#k=xxx) o solo el código.
+function parseTopic(input) {
+  const text = input.trim()
+  const i = text.indexOf('#')
+  const code = i >= 0 ? new URLSearchParams(text.slice(i + 1)).get('k') : text
+  return code && /^[\w-]+$/.test(code) ? code : null
+}
+
 const kissWord = (n) => (n === 1 ? 'beso' : 'besos')
 
 export default function App() {
-  const [topic] = useState(readTopic)
+  const [topic, setTopic] = useState(readTopic)
   const [meId, setMeId] = useState(() => store.get('me'))
 
   if (!topic) {
     return (
-      <main className="screen center">
-        <div className="big-emoji">🔒</div>
-        <h1>Falta el enlace secreto</h1>
-        <p className="muted">Abre la app con el enlace que te han pasado (el que termina en <code>#k=…</code>).</p>
-      </main>
+      <LinkSetup
+        onTopic={(t) => {
+          store.set('topic', t)
+          setTopic(t)
+        }}
+      />
     )
   }
 
@@ -67,6 +76,39 @@ export default function App() {
   }
 
   return <Kisses topic={topic} meId={meId} onLogout={() => (store.set('me', null), setMeId(null))} />
+}
+
+function LinkSetup({ onTopic }) {
+  const [value, setValue] = useState('')
+  const [invalid, setInvalid] = useState(false)
+  const submit = (e) => {
+    e.preventDefault()
+    const t = parseTopic(value)
+    if (t) onTopic(t)
+    else setInvalid(true)
+  }
+  return (
+    <main className="screen center">
+      <div className="big-emoji">🔒</div>
+      <h1>Falta el enlace secreto</h1>
+      <p className="muted">Pega aquí el enlace que te han pasado (el que termina en <code>#k=…</code>).</p>
+      <form className="link-form" onSubmit={submit}>
+        <input
+          className="input"
+          value={value}
+          onChange={(e) => (setValue(e.target.value), setInvalid(false))}
+          placeholder="https://…#k=…"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck="false"
+        />
+        <button className="btn btn-primary" disabled={!value.trim()}>
+          Entrar 💋
+        </button>
+      </form>
+      {invalid && <p className="error">Ese enlace no parece correcto</p>}
+    </main>
+  )
 }
 
 function Kisses({ topic, meId, onLogout }) {
