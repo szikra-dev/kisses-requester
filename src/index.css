@@ -1,0 +1,289 @@
+:root {
+  --bg: #fff5f7;
+  --fg: #3a1d2b;
+  --muted: #9b7486;
+  --accent: #ff3d7f;
+  --accent-2: #ff8fb1;
+  --card: #ffffff;
+  --shadow: 0 10px 30px rgba(255, 61, 127, 0.18);
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d0f16;
+    --fg: #ffe6ef;
+    --muted: #b48a9c;
+    --card: #2b1520;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.screen {
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.big-emoji {
+  font-size: 64px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top .link {
+  margin-left: auto;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f0b429;
+}
+
+.dot.online {
+  background: #2ecc71;
+}
+
+.dot.offline {
+  background: #e74c3c;
+}
+
+.link {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 24px;
+  cursor: pointer;
+  font-size: 1.05rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+  background: var(--card);
+  color: var(--fg);
+  box-shadow: var(--shadow);
+  min-width: 140px;
+}
+
+.btn:active,
+.kiss-button:active {
+  transform: scale(0.96);
+}
+
+.who {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slide-in 0.35s ease-out;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.kiss-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 26px;
+  align-items: center;
+}
+
+.kiss-row span {
+  animation: pop 0.3s ease-out backwards;
+}
+
+.ask {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.kiss-button {
+  width: min(64vw, 240px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 0;
+  background: radial-gradient(circle at 30% 30%, var(--accent-2), var(--accent));
+  box-shadow: var(--shadow), inset 0 -8px 20px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.08s;
+  user-select: none;
+}
+
+.kiss-icon {
+  display: inline-block;
+  font-size: min(28vw, 104px);
+  animation: pop 0.25s ease-out;
+}
+
+.ask-label {
+  margin: 12px 0 0;
+  font-size: 1.2rem;
+}
+
+.counter {
+  margin: 0;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.counter .pop {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  animation: pop 0.2s ease-out;
+}
+
+.error {
+  text-align: center;
+  color: #e74c3c;
+  margin: 0;
+}
+
+.rain {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 10;
+  animation: fade-in 0.3s;
+}
+
+.drop {
+  position: absolute;
+  top: -60px;
+  animation: fall linear infinite;
+}
+
+.rain-card {
+  position: relative;
+  text-align: center;
+  background: var(--card);
+  border-radius: 24px;
+  padding: 24px;
+  margin: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: pop 0.4s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(calc(100dvh + 120px)) rotate(25deg);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-12px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
