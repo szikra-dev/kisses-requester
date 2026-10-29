@@ -15,8 +15,14 @@ Cada acción es un mensaje; el estado se calcula a partir de los mensajes. ntfy.
 mensajes **12 horas**: una petición sin responder durante más de 12 h se pierde.
 
 El topic secreto **no está en el repo**: va en el enlace, `https://<url>/#k=<topic-secreto>`.
-Ábrelo una vez en cada móvil y queda guardado. Bonus: si os suscribís a ese topic en la app de
-ntfy (Android/iOS) os llegan notificaciones push.
+Ábrelo una vez en cada móvil y queda guardado.
+
+## Notificaciones push
+
+Cuando te piden besos, además se publica un aviso en tu canal personal `<topic>-<tu-id>`
+(p. ej. `…-david`). Suscríbete a él en la app ntfy (Android/iPhone) y te saltará la
+notificación aunque la web esté cerrada; al tocarla se abre la app. Las instrucciones y el
+nombre exacto del canal están en la sección "🔔 Avisos en el móvil" de la propia app.
 
 Personas y ajustes en `src/config.js`.
 

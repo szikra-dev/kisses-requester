@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { PEOPLE, REQUEST_DEBOUNCE_MS } from './config.js'
-import { deriveState, publish, subscribe } from './kisses.js'
+import { NTFY_URL, PEOPLE, REQUEST_DEBOUNCE_MS } from './config.js'
+import { deriveState, notifyTopic, publish, subscribe } from './kisses.js'
 
 const store = {
   get(key) {
@@ -195,8 +195,48 @@ function Kisses({ topic, meId, onLogout }) {
 
       {error && <p className="error">{error}</p>}
 
+      <NotifySetup channel={notifyTopic(topic, me.id)} other={other.name} />
+
       {rain && <KissRain ev={rain} from={other.name} onClose={() => setRain(null)} />}
     </main>
+  )
+}
+
+function NotifySetup({ channel, other }) {
+  const [copied, setCopied] = useState(false)
+  const host = new URL(NTFY_URL).host
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(channel)
+      setCopied(true)
+    } catch {
+      /* sin portapapeles: que lo copie a mano */
+    }
+  }
+  return (
+    <details className="notify">
+      <summary>🔔 Avisos en el móvil</summary>
+      <p className="small">Para que te salte una notificación cuando {other} te pida besos:</p>
+      <ol className="small">
+        <li>
+          Instala la app <b>ntfy</b> (
+          <a href="https://play.google.com/store/apps/details?id=io.heckel.ntfy">Android</a> ·{' '}
+          <a href="https://apps.apple.com/app/ntfy/id1625396347">iPhone</a>).
+        </li>
+        <li>
+          Pulsa <b>+</b> y suscríbete a este canal (servidor {host}):
+          <code className="channel">{channel}</code>
+          <span className="notify-actions">
+            <button className="link" onClick={copy}>
+              {copied ? '¡Copiado!' : 'Copiar'}
+            </button>
+            <a className="link" href={`ntfy://${host}/${channel}`}>
+              Abrir en ntfy
+            </a>
+          </span>
+        </li>
+      </ol>
+    </details>
   )
 }
 

@@ -21,7 +21,26 @@ export async function publish(topic, { type, from, to, n }) {
     }),
   })
   if (!res.ok) throw new Error(`ntfy respondió ${res.status}`)
+  if (type === 'req') notify(topic, to, message)
   return parseEvent(await res.json())
+}
+
+// Canal personal de avisos: cada uno se suscribe al suyo en la app de ntfy del móvil.
+export const notifyTopic = (topic, person) => `${topic}-${person}`
+
+// Aviso push al destinatario. Si falla no pasa nada: la petición ya está publicada.
+function notify(topic, to, message) {
+  fetch(`${NTFY_URL}/`, {
+    method: 'POST',
+    body: JSON.stringify({
+      topic: notifyTopic(topic, to),
+      title: 'Besitos',
+      message,
+      tags: ['kiss'],
+      priority: 4,
+      click: `${location.origin}${location.pathname}#k=${topic}`,
+    }),
+  }).catch(() => {})
 }
 
 export function parseEvent(raw) {
